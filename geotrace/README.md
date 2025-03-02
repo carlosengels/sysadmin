@@ -24,8 +24,8 @@ Geotrace is a powerful network diagnostic tool that combines the functionality o
 
 1. Clone or download this repository:
    ```bash
-   git clone <repository-url>
-   cd geotrace
+   git clone https://github.com/carlosengels/sysadmin
+   cd sysadmin/geotrace
    ```
 
 2. Make the setup script executable:
