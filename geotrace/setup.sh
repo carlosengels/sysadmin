@@ -25,16 +25,29 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-# Detect OS
-if [ -f /etc/os-release ]; then
-    . /etc/os-release
-    OS=$NAME
-elif [ -f /etc/lsb-release ]; then
-    . /etc/lsb-release
-    OS=$DISTRIB_ID
-else
-    OS=$(uname -s)
-fi
+# Enhanced OS detection
+detect_os() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        OS=$NAME
+        VERSION_ID=$VERSION_ID
+        
+        # Special handling for Amazon Linux
+        if [[ $OS == "Amazon Linux" ]] || grep -q "Amazon Linux" /etc/system-release 2>/dev/null; then
+            OS="Amazon Linux"
+            print_status "Detected Amazon Linux"
+            return
+        fi
+    elif [ -f /etc/system-release ]; then
+        OS=$(cat /etc/system-release | cut -d' ' -f1)
+    elif [ -f /etc/lsb-release ]; then
+        . /etc/lsb-release
+        OS=$DISTRIB_ID
+    else
+        OS=$(uname -s)
+    fi
+    print_status "Detected OS: $OS"
+}
 
 # Install Go based on OS
 install_go() {
@@ -44,6 +57,11 @@ install_go() {
         "Ubuntu"|"Debian GNU/Linux")
             apt-get update
             apt-get install -y golang
+            ;;
+        "Amazon Linux")
+            # Amazon Linux specific installation
+            amazon-linux-extras install -y golang1.11
+            yum install -y golang
             ;;
         "CentOS Linux"|"Red Hat Enterprise Linux")
             yum install -y golang
@@ -59,11 +77,57 @@ install_go() {
     esac
 }
 
-# Check if Go is installed
+# Install required system packages
+install_prerequisites() {
+    print_status "Installing prerequisites..."
+    
+    case $OS in
+        "Ubuntu"|"Debian GNU/Linux")
+            apt-get update
+            apt-get install -y git curl build-essential
+            ;;
+        "Amazon Linux")
+            yum update -y
+            yum groupinstall -y "Development Tools"
+            yum install -y git curl
+            ;;
+        "CentOS Linux"|"Red Hat Enterprise Linux")
+            yum update -y
+            yum groupinstall -y "Development Tools"
+            yum install -y git curl
+            ;;
+        "Fedora")
+            dnf update -y
+            dnf groupinstall -y "Development Tools"
+            dnf install -y git curl
+            ;;
+        *)
+            print_error "Unsupported operating system for automatic prerequisite installation"
+            exit 1
+            ;;
+    esac
+}
+
+# Detect OS
+detect_os
+
+# Install prerequisites
+install_prerequisites
+
+# Check if Go is installed and install if needed
 if ! command -v go &> /dev/null; then
     print_warning "Go is not installed"
     install_go
 fi
+
+# Verify Go installation
+if ! command -v go &> /dev/null; then
+    print_error "Go installation failed. Please install Go manually."
+    exit 1
+fi
+
+# Print Go version
+go version
 
 # Create project directory if it doesn't exist
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"

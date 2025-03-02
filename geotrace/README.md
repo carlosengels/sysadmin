@@ -16,9 +16,20 @@ Geotrace is a powerful network diagnostic tool that combines the functionality o
 
 ## Prerequisites
 
-- Linux-based operating system (Ubuntu, Debian, CentOS, RHEL, or Fedora)
+- Linux-based operating system:
+  - Ubuntu/Debian
+  - CentOS/RHEL
+  - Fedora
+  - Amazon Linux
+  - Amazon Linux 2
 - Root/sudo privileges
 - Internet connection
+
+The setup script will automatically install:
+- Go (if not present)
+- Development tools
+- Git and curl
+- Required Go dependencies
 
 ## Installation
 
