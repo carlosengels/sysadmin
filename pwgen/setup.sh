@@ -87,12 +87,13 @@ install_prerequisites() {
             apt-get install -y git curl build-essential
             ;;
         "Amazon Linux")
-            yum update -y
+            yum update -y --allowerasing
             yum groupinstall -y "Development Tools"
-            yum install -y git curl
+            # Skip curl installation as it's already present and causing conflicts
+            yum install -y git
             ;;
         "CentOS Linux"|"Red Hat Enterprise Linux")
-            yum update -y
+            yum update -y --allowerasing
             yum groupinstall -y "Development Tools"
             yum install -y git curl
             ;;
