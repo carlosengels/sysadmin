@@ -42,7 +42,7 @@ func generatePassword(length int) (string, error) {
 
 	// Ensure at least one character from each set
 	requiredChars := []string{lowercase, uppercase, numbers, symbols}
-	for i, chars := range requiredChars {
+	for _, chars := range requiredChars {
 		pos, err := generateRandomInt(length)
 		if err != nil {
 			return "", err
