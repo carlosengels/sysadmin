@@ -1,5 +1,8 @@
 # S3 Transfer Tool Setup Guide
 
+## AI Development Disclaimer
+This project was developed with the assistance of AI tools. While the code has been reviewed and tested, please use it at your own risk. The developers and AI assistants involved in the creation of this tool are not responsible for any data loss, security issues, or other problems that may arise from its use.
+
 ## Progress
 ✅ AWS Credentials Setup
 ✅ Directory Setup
