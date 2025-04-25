@@ -1,0 +1,20 @@
+# S3 Bi-Directional Sync Script
+
+This script syncs files between a local directory and an S3 bucket in both directions, ensuring both sides have all files without deleting anything.
+
+## Setup
+
+1. Move the script to your `~/bin` directory:
+   mkdir -p ~/bin
+   mv sync-tmp.sh ~/bin/bsync
+   chmod +x ~/bin/bsync
+
+2. Add ~/bin to your PATH if it's not already:
+
+    echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
+
+3. Usage
+
+    Run sync with 
+    bsync
