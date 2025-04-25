@@ -4,17 +4,10 @@ This script syncs files between a local directory and an S3 bucket in both direc
 
 ## Setup
 
-1. Move the script to your `~/bin` directory:
-   mkdir -p ~/bin
-   mv sync-tmp.sh ~/bin/bsync
-   chmod +x ~/bin/bsync
+chmod +x syncsetup.sh
+./syncsetup.sh
 
-2. Add ~/bin to your PATH if it's not already:
 
-    echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
-    source ~/.bashrc
+## Usage
 
-3. Usage
-
-    Run sync with 
-    bsync
+bsync 

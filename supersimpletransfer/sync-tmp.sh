@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Get the user's home directory
+USER_HOME="${HOME}"
+
 # Define environment variable if not already set
-TMP_STORE="${TMP_STORE:-/home/engels/temp_store}"
+TMP_STORE="$USER_HOME/tmp_store"
 S3_BUCKET="s3://supersimpletransferbucket"
 
 # Create local directory if it doesn't exist
