@@ -6,5 +6,3 @@ chmod +x ~/bin/bsync
 
 echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
-
-rm -f syncsetup.sh
